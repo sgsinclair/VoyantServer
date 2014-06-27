@@ -1,0 +1,20 @@
+#################
+## Eclipse
+#################
+
+.project
+.metadata
+bin/
+tmp/
+work/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.tomcatplugin
+.settings/
+/target
+src/main/webapp/WEB-INF/classes
+/_app

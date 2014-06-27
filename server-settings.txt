@@ -1,0 +1,17 @@
+
+
+# The port to use for the web server (default is 8888). If a port is already in use,
+# this can be changed (8889, etc.). If the server terminated unexpectedly the port
+# may continue being used and restarting the machine is one way of resetting things.
+port = 8888
+
+# The amount of memory in MB to allocate to the server. The default value here (1024)
+# is higher than needed in most cases, but with very large text collections, it may
+# need to be even higher (2048, 4096, etc.)
+memory = 1024
+
+# The absolute path to an existing parent directory that the server should use for data.
+# The server doesn't delete data when it's terminated but by default the data folder
+# can be a temporary directory that may disappear after a machine restart.
+# Leave this blank to use the default directory
+data_directory = 
