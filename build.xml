@@ -54,9 +54,9 @@
 		<copy todir="${dist}/_app">
 			<fileset dir="_app"/>
 		</copy>
-		<copy file="${src}/server-settings.txt" todir="${dist}/"/>
-		<copy file="${src}/license-GPL3.txt" todir="${dist}/"/>
-		<copy file="${src}/README.md" todir="${dist}/"/>
+		<copy file="./server-settings.txt" todir="${dist}/"/>
+		<copy file="./license-GPL3.txt" todir="${dist}/"/>
+		<copy file="./README.md" todir="${dist}/"/>
 		<jar jarfile="VoyantServer.zip" 
 			filesonly="true"
  			compress="true">
@@ -65,4 +65,30 @@
 		
 	</target>
 	
+	<target name="smallerjar" depends="clean,compile">
+		<jar jarfile="${dist}/VoyantServer.jar" 
+			filesonly="true"
+			compress="true">
+			<fileset dir="${build}" />
+			<zipfileset src="${jarpath}/jetty-all-8.1.9.v20130131.jar" excludes="META-INF/*" />
+			<zipfileset src="${jarpath}/servlet-api-3.0.jar" excludes="META-INF/*" />
+			<manifest>
+				<attribute name="Main-Class" value="org.voyanttools.server.ui.VoyantServerStart"/>
+			</manifest>
+		</jar>
+		<copy todir="${dist}/_app">
+			<fileset dir="_app">
+				<exclude name="**/*stanford-corenlp-1.2.0-models.jar"/>
+			</fileset>
+		</copy>
+		<copy file="./server-settings.txt" todir="${dist}/"/>
+		<copy file="./license-GPL3.txt" todir="${dist}/"/>
+		<copy file="./README.md" todir="${dist}/"/>
+		<jar jarfile="VoyantServerNoNlp.zip" 
+			filesonly="true"
+			compress="true">
+			<fileset dir="${dist}" />
+		</jar>
+		
+	</target>	
 </project>
