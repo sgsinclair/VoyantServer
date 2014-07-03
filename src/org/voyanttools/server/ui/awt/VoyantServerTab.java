@@ -36,6 +36,7 @@ import org.aw20.jettydesktop.ui.ExecutorInterface;
 import org.aw20.jettydesktop.ui.ServerConfigMap;
 import org.aw20.jettydesktop.ui.awt.ServerTab;
 import org.aw20.util.DateUtil;
+import org.voyanttools.server.ui.ServerConfig;
 
 /**
  * @author sgs
@@ -47,7 +48,7 @@ public class VoyantServerTab extends JPanel implements ExecutorInterface{
 	private static final String stopServer = "Stop Server";
 	private static final String startServer = "Start Server";
 	
-	private final ServerConfigMap serverConfigMap;
+	private ServerConfigMap serverConfigMap;
 	private final ConfigActionInterface configActionI;
 	private JButton gotoButton;
 	
@@ -69,8 +70,8 @@ public class VoyantServerTab extends JPanel implements ExecutorInterface{
     private javax.swing.JTextField portTextField;
     private javax.swing.JTextField memoryTextField;
     
-	public VoyantServerTab(ServerConfigMap _serverConfigMap, ConfigActionInterface _configActionI ) {
-		this.serverConfigMap 	= _serverConfigMap;
+	public VoyantServerTab(ConfigActionInterface _configActionI ) throws IOException {
+		serverConfigMap = ServerConfig.getStoredServerConfig();
 		this.configActionI		= _configActionI;
 		
 		initComponents();
@@ -115,7 +116,11 @@ public class VoyantServerTab extends JPanel implements ExecutorInterface{
             		stopServer();
             	}
             	else {
-            		startServer();
+            		try {
+						startServer();
+					} catch (IOException e) {
+						onConsole(e.toString());
+					}
             	}
             }
         });
@@ -256,7 +261,10 @@ public class VoyantServerTab extends JPanel implements ExecutorInterface{
 		executor.exit();
 	}
 	
-	private void startServer(){
+	private void startServer() throws IOException{
+		if (ServerConfig.isModified(serverConfigMap)) {
+			serverConfigMap = ServerConfig.getStoredServerConfig();
+		}
 		serverConfigMap.setPort(portTextField.getText());
 		serverConfigMap.setMemoryJVM(memoryTextField.getText());
 		onConsole("*** Starting Voyant Server – Web page will open automatically when ready ***\n");

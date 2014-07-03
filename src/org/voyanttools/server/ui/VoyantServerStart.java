@@ -120,10 +120,8 @@ public class VoyantServerStart extends Start {
 		});
 		mnHelp.add(mntmSupportSite);
 		
-		ServerConfigMap serverConfigMap = ServerConfig.getStoredServerConfig();
-		
 		// We need to add a new tab
-		VoyantServerTab	sT	= new VoyantServerTab( serverConfigMap, this );
+		VoyantServerTab	sT	= new VoyantServerTab(this );
 		
 		frame.getContentPane().add(sT, BorderLayout.CENTER);
 	}

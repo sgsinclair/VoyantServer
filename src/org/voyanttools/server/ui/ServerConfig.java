@@ -21,7 +21,8 @@ public class ServerConfig {
 			setMemoryJVM("1024");
 		}};
 		Properties properties = new Properties();
-		File file = new File("server-settings.txt");
+		File file = getFile();
+		serverConfigMap.put("lastModified", String.valueOf(file.lastModified()));
 		FileInputStream fis = new FileInputStream(file);
 		properties.load(fis);
 		fis.close();
@@ -37,11 +38,28 @@ public class ServerConfig {
 			else if (name.equals("data_directory")) {
 				serverConfigMap.setDefaultJVMArgs("-Djava.io.tmpdir="+val);
 			}
+			else if (name.equals("uri_path")) {
+				serverConfigMap.setDefaultWebUri(val);
+			}
 			else {
 				serverConfigMap.put(name, properties.getProperty(name));
 			}
 		}
+		File f = new File("data");
+		
+		if (new File("data").exists() && (!serverConfigMap.containsKey("data_directory") || serverConfigMap.get("data_directory").isEmpty())) {
+			serverConfigMap.setDefaultJVMArgs("-Djava.io.tmpdir="+new File(System.getProperty("user.dir"),"data") );
+		}
 		return serverConfigMap;
+	}
+	
+	public static boolean isModified(ServerConfigMap serverConfigMap) {
+		File file = getFile();
+		return file.lastModified() > Long.valueOf(serverConfigMap.get("lastModified"));
+	}
+	
+	private static File getFile() {
+		return new File("server-settings.txt");
 	}
 	
 	public static void main(String[] args) throws IOException {

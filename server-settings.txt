@@ -13,5 +13,17 @@ memory = 1024
 # The absolute path to an existing parent directory that the server should use for data.
 # The server doesn't delete data when it's terminated but by default the data folder
 # can be a temporary directory that may disappear after a machine restart.
-# Leave this blank to use the default directory
+# Leave this blank to use the default directory. The default directory will be a
+# temporary directory determined by your operation system UNLESS there's a folder
+# called data in the same directory as this settings file – in that case the data folder
+# will be used. If you want this behaviour, just create an empty data folder in this
+# directory (after that, you can zip up the parent folder and redistribute VoyantServer
+# with existing data – this can be used in conjunction with the uri_path below to open
+# up an existing corpus automatically (/?corpus=id where id is replaced by the real
+# corpus ID that you've created). If the data directory exists and you want to use it
+# leave this value blank.
 data_directory = 
+
+# The URI path (after the domain) to use (default is /). This is a good way to provide
+# load a corpus by default, ex: /?input=http://cbc.ca/news/ 
+uri_path = /
