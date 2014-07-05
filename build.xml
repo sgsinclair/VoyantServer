@@ -74,6 +74,7 @@
 			<zipfileset src="${jarpath}/servlet-api-3.0.jar" excludes="META-INF/*" />
 			<manifest>
 				<attribute name="Main-Class" value="org.voyanttools.server.ui.VoyantServerStart"/>
+				<attribute name="appname" value="VoyantServer" />
 			</manifest>
 		</jar>
 		<copy todir="${dist}/_app">

@@ -103,7 +103,7 @@ public class Executor extends Object {
 		
 		System.out.print("Command: ");
 		for (String arg : programArgs) {
-			System.out.print(" "+arg);
+			System.out.print("("+arg+")");
 		}
 		System.err.println("");
 

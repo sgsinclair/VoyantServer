@@ -14,7 +14,7 @@ public class ServerConfig {
 	public static ServerConfigMap getStoredServerConfig() throws IOException {
 		ServerConfigMap serverConfigMap =  new ServerConfigMap(){{
 			setName("Voyant");
-			setIP("127.0.0.1");
+			setIP("");
 			setPort("8888");
 			setWebFolder(System.getProperty("user.dir") + File.separator + "_app");
 			setCurrentJVM();
@@ -27,8 +27,8 @@ public class ServerConfig {
 		properties.load(fis);
 		fis.close();
 		for (String name : properties.stringPropertyNames()) {
-			String val = properties.getProperty(name);
-			if (val.trim().isEmpty()) { continue;}
+			String val = properties.getProperty(name).trim();
+			if (val.isEmpty()) { continue;}
 			if (name.equals("port")) {
 				serverConfigMap.setPort(val);
 			}
@@ -36,10 +36,13 @@ public class ServerConfig {
 				serverConfigMap.setMemoryJVM(val);
 			}
 			else if (name.equals("data_directory")) {
-				serverConfigMap.setDefaultJVMArgs("-Djava.io.tmpdir="+val);
+				serverConfigMap.setDefaultJVMArgs((serverConfigMap.getDefaultJVMArgs()!=null ? serverConfigMap.getDefaultJVMArgs()+" " : "") +"-Djava.io.tmpdir="+val);
 			}
 			else if (name.equals("uri_path")) {
 				serverConfigMap.setDefaultWebUri(val);
+			}
+			else if (name.equals("host")) {
+				serverConfigMap.setIP(val);
 			}
 			else {
 				serverConfigMap.put(name, properties.getProperty(name));
@@ -48,7 +51,7 @@ public class ServerConfig {
 		File f = new File("data");
 		
 		if (new File("data").exists() && (!serverConfigMap.containsKey("data_directory") || serverConfigMap.get("data_directory").isEmpty())) {
-			serverConfigMap.setDefaultJVMArgs("-Djava.io.tmpdir="+new File(System.getProperty("user.dir"),"data") );
+			serverConfigMap.setDefaultJVMArgs((serverConfigMap.getDefaultJVMArgs()!=null ? serverConfigMap.getDefaultJVMArgs()+" " : "") +"-Djava.io.tmpdir="+new File(System.getProperty("user.dir"),"data") );
 		}
 		return serverConfigMap;
 	}
