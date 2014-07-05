@@ -9,7 +9,6 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -17,14 +16,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
 import org.aw20.jettydesktop.ui.ServerConfigMap;
 import org.aw20.jettydesktop.ui.Start;
-import org.aw20.jettydesktop.ui.awt.ServerTab;
 import org.voyanttools.server.ui.awt.VoyantServerTab;
 
 /**
@@ -33,7 +30,7 @@ import org.voyanttools.server.ui.awt.VoyantServerTab;
  */
 public class VoyantServerStart extends Start {
 
-	private static final String VERSION = "1.0";
+	public static final String VERSION = "1.1";
 	
 	private JFrame frame;
 	
@@ -67,9 +64,31 @@ public class VoyantServerStart extends Start {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
+					System.setProperty("apple.eawt.quitStrategy", "CLOSE_ALL_WINDOWS");
+					
+					// only seems to work for Java 1.6<
+					// take the menu bar off the jframe
+					System.setProperty("apple.laf.useScreenMenuBar", "true");
+					// set the name of the application menu item
+					System.setProperty("com.apple.mrj.application.apple.menu.about.name", "VoyantServer");
+					
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					VoyantServerStart window = new VoyantServerStart();
+					final VoyantServerStart window = new VoyantServerStart();
 					window.frame.setVisible(true);
+					
+					if (System.getProperty("os.name").equals("Mac OS X"))
+				    {
+				        Runtime.getRuntime().addShutdownHook(new Thread()
+				        {
+				            @Override
+				            public void run()
+				            {
+				            	window.stopServers();
+				            }
+				        });
+				    }
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -126,11 +145,14 @@ public class VoyantServerStart extends Start {
 		frame.getContentPane().add(sT, BorderLayout.CENTER);
 	}
 	
-	protected boolean terminateApp() {
+	private void stopServers() {
 		VoyantServerTab sT	= (VoyantServerTab)frame.getContentPane().getComponent(0);
 		if ( sT.isServerRunning() ) {
 			sT.stopServer();
 		}
+	}
+	protected boolean terminateApp() {
+		stopServers();
 		System.exit(1);
 		return true;
 	}
