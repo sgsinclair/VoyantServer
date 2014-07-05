@@ -3,29 +3,16 @@
  */
 package org.voyanttools.server.ui.awt;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Panel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URLConnection;
-import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.text.DefaultCaret;
 
@@ -34,9 +21,9 @@ import org.aw20.jettydesktop.ui.ConfigActionInterface;
 import org.aw20.jettydesktop.ui.Executor;
 import org.aw20.jettydesktop.ui.ExecutorInterface;
 import org.aw20.jettydesktop.ui.ServerConfigMap;
-import org.aw20.jettydesktop.ui.awt.ServerTab;
 import org.aw20.util.DateUtil;
 import org.voyanttools.server.ui.ServerConfig;
+import org.voyanttools.server.ui.VoyantServerStart;
 
 /**
  * @author sgs
@@ -166,7 +153,7 @@ public class VoyantServerTab extends JPanel implements ExecutorInterface{
         
         JLabel creditsLabel = new JLabel();
         creditsLabel.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        creditsLabel.setText("Stéfan Sinclair & Geoffrey Rockwell (v1.0)");
+        creditsLabel.setText("Stéfan Sinclair & Geoffrey Rockwell (v"+VoyantServerStart.VERSION+")");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
