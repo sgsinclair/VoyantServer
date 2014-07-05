@@ -25,5 +25,8 @@ memory = 1024
 data_directory = 
 
 # The URI path (after the domain) to use (default is /). This is a good way to provide
-# load a corpus by default, ex: /?input=http://cbc.ca/news/ 
-uri_path = /
+# load a corpus by default, ex: uri_path = /?input=http://cbc.ca/news/ 
+# It's also possible to build a custom menu for the open menu on the front page. Separate
+# the corpus ID and a label by a colon and separate multiple entries by commas, making sure
+# to escape characters (like spaces), eg:  /?1404538727536.5931=Corpus+One;555.555:Corpus+Two
+uri_path = /?1404538727536.5931:Corpus+One;555.555:Corpus+Two
