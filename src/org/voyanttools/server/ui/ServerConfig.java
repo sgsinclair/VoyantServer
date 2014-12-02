@@ -50,6 +50,7 @@ public class ServerConfig {
 		}
 		File f = new File("data");
 		
+//		serverConfigMap.setDefaultJVMArgs((serverConfigMap.getDefaultJVMArgs()!=null ? serverConfigMap.getDefaultJVMArgs()+" " : "") +"OPTIONS=Server,jsp");
 		if (new File("data").exists() && (!serverConfigMap.containsKey("data_directory") || serverConfigMap.get("data_directory").isEmpty())) {
 			serverConfigMap.setDefaultJVMArgs((serverConfigMap.getDefaultJVMArgs()!=null ? serverConfigMap.getDefaultJVMArgs()+" " : "") +"-Djava.io.tmpdir="+new File(System.getProperty("user.dir"),"data") );
 		}
