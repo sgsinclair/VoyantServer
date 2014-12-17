@@ -8,8 +8,10 @@ For more details on installation, configuration and running, see http://docs.voy
 
 Jetty Desktop requires Java6+ to be installed, but after that, it ships with everything you need to start running your web applications in Jetty (v8.1).
 
-## License ##
-Voyant Server is released under the same license as JettyDesktop, the GNU General Public License v3.0 (see license-GPL3.txt in this directory).
+## Known Issues ##
+* VoyantServer has to be run from a folder that doesn't have a space (all the way up to the root)
+* several tools and skins from Voyant Tools 1.0 still not available
+* no backwards compatibility for Voyant Tools 1.0 yet
 
 ## Release Notes ##
 * version 1.0 (June 26th, 2014)
@@ -24,3 +26,6 @@ Voyant Server is released under the same license as JettyDesktop, the GNU Genera
 * version 2.0 M2 (Dec 16, 2014)
 	* fix for file uploading
 	* new UI elements in tool headers: help, options, switch tools, and export
+
+## License ##
+Voyant Server is released under the same license as JettyDesktop, the GNU General Public License v3.0 (see license-GPL3.txt in this directory).
