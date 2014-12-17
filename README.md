@@ -21,3 +21,6 @@ Voyant Server is released under the same license as JettyDesktop, the GNU Genera
 	* NEW: now possible to make server open (beyond local address – see settings)
 * version 2.0 M1 (Dec. 2, 2014)
 	* new release to coincide with Voyant Tools 2.0 M1: https://github.com/sgsinclair/Voyant/tree/v2.0.0-M1
+* version 2.0 M2 (Dec 16, 2014)
+	* fix for file uploading
+	* new UI elements in tool headers: help, options, switch tools, and export
