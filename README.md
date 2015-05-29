@@ -26,6 +26,14 @@ Jetty Desktop requires Java6+ to be installed, but after that, it ships with eve
 * version 2.0 M2 (Dec 16, 2014)
 	* fix for file uploading
 	* new UI elements in tool headers: help, options, switch tools, and export
+* version 2.0 M4 (May 28, 2015)
+	* shifted to using tabs in for tools (shows more tools available)
+	* fixed bug for ingesting HTML (entire file was used before because of regression bug)
+	* clicking on items in trends now triggers events properly
+	* much improved loading of framework assets (much faster to load remotely)
+	* more context feature has returned to KWICs
+	* global stopword lists
+	* and [much more](https://github.com/sgsinclair/Voyant/issues?q=milestone%3A%222.0+M4%22)
 
 ## License ##
 Voyant Server is released under the same license as JettyDesktop, the GNU General Public License v3.0 (see license-GPL3.txt in this directory).
