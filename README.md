@@ -34,6 +34,11 @@ Jetty Desktop requires Java6+ to be installed, but after that, it ships with eve
 	* more context feature has returned to KWICs
 	* global stopword lists
 	* and [much more](https://github.com/sgsinclair/Voyant/issues?q=milestone%3A%222.0+M4%22)
+* version 2.0 M5 (Jule 23, 2015)
+	* new Phrases tool (for query and queryless n-gram analysis)
+	* restored input format options during corpus creation
+	* improved search box with better help
+	* and [more](https://github.com/sgsinclair/Voyant/issues?q=milestone%3A%222.0+M5%22)
 
 ## License ##
 Voyant Server is released under the same license as JettyDesktop, the GNU General Public License v3.0 (see license-GPL3.txt in this directory).
