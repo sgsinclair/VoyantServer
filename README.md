@@ -39,6 +39,14 @@ Jetty Desktop requires Java6+ to be installed, but after that, it ships with eve
 	* restored input format options during corpus creation
 	* improved search box with better help
 	* and [more](https://github.com/sgsinclair/Voyant/issues?q=milestone%3A%222.0+M5%22)
+* version 2.0 M6 (October 19, 2015)
+	* export URL of default skin now remembers which panels are active
+	* easier to have no stopwords selected
+	* introdcutory text and documentation link under box
+	* improved HTML5 Cirrus
+	* preliminary RezoViz
+	* reader enhancements
+	* and [more](https://github.com/sgsinclair/Voyant/issues?q=milestone%3A%222.0+M6%22)
 
 ## License ##
 Voyant Server is released under the same license as JettyDesktop, the GNU General Public License v3.0 (see license-GPL3.txt in this directory).
