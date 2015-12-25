@@ -1,4 +1,5 @@
 ## Voyant Server ##
+
 Voyant Server is a web application launcher for Voyant Tools – it makes it easy to run a stand-alone instance of Voyant Tools on your local machine, rather than A desktop launcher to control one or more Jetty instances.   Make developing web-apps very easy by running up apps quickly and easily.
 
 Voyant Server (not Voyant Tools, the web application) is an extensive adaption of JettyDesktop, see https://github.com/aw20/jettydesktop.
@@ -47,6 +48,21 @@ Jetty Desktop requires Java6+ to be installed, but after that, it ships with eve
 	* preliminary RezoViz
 	* reader enhancements
 	* and [more](https://github.com/sgsinclair/Voyant/issues?q=milestone%3A%222.0+M6%22)
+* version 2.0 M7 (December 24, 2015)
+ 	* built-in documentation
+ 	* modify (add, remove, reorder) documents in a corpus
+ 	* improved support for some Asian languages
+ 	* improved support for touch devices
+ 	* Knots tool reimplemented
+ 	* fixed bug for applying stopwords globally
+ 	* new corpus collocates visualization
+	* export URL of default skin now remembers which panels are active
+	* easier to have no stopwords selected
+	* introdcutory text and documentation link under box
+	* improved HTML5 Cirrus
+	* preliminary RezoViz
+	* reader enhancements
+	* and [more](https://github.com/sgsinclair/Voyant/issues?q=milestone%3A%222.0+M7%22)
 
 ## License ##
 Voyant Server is released under the same license as JettyDesktop, the GNU General Public License v3.0 (see license-GPL3.txt in this directory).
