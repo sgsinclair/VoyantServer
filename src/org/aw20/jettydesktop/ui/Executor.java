@@ -27,9 +27,12 @@ package org.aw20.jettydesktop.ui;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -48,7 +51,7 @@ public class Executor extends Object {
 	private Process process;
 	private ExecutorInterface executorI;
 	private boolean bRun = true;
-	private ioConsumer ioconsumers[];
+	private Thread ioconsumers[];
 	private adminPortWatcher	AdminPortWatcher = null;
 	private int	adminPort;
 
@@ -81,6 +84,9 @@ public class Executor extends Object {
 		List<String> programArgs = new ArrayList<String>();
 		programArgs.add(JDK_HOME);
 
+		// force UTF-8
+		programArgs.add("-Dfile.encoding=UTF-8");
+		
 		if (options.getMemoryJVM() != null)
 			programArgs.add("-Xmx" + options.getMemoryJVM() + "m");
 
@@ -114,9 +120,26 @@ public class Executor extends Object {
 			executorI.onServerStart();
 		}
 
-		ioconsumers = new ioConsumer[2];
-		ioconsumers[0] = new ioConsumer(process.getErrorStream());
+		ioconsumers = new Thread[2];
 		ioconsumers[1] = new ioConsumer(process.getInputStream());
+		if (options.getLogsFile()) {
+			File dir = new File(options.getDataFolder(), "logs");
+			if (dir.exists()==false) {
+				if (!dir.mkdir()) {
+					System.err.println("Can't create logs directory: "+dir);
+					throw new IOException("Can't create logs directory: "+dir);
+				}
+			}
+			File out = new File(dir, "jetty.log");
+			if (executorI!=null) {
+				executorI.onConsole("Logging to file: "+out.getAbsolutePath());
+			}
+			FileWriter outWriter = new FileWriter(out, true);
+			ioconsumers[0] = new ioFileConsumer(process.getErrorStream(), outWriter);
+		}
+		else {
+			ioconsumers[0] = new ioConsumer(process.getErrorStream());
+		}
 		
 		if ( adminPort > 0 ){
 			try{
@@ -221,6 +244,44 @@ public class Executor extends Object {
 			}
 		}
 	}
+	
+	class ioFileConsumer extends Thread {
+		BufferedReader br;
+		PrintWriter wr;
+
+		public ioFileConsumer(InputStream io, Writer wr) {
+			br = new BufferedReader(new InputStreamReader(io));
+			this.wr = new PrintWriter(wr);
+			start();
+		}
+
+		public void run() {
+			
+			while (bRun) {
+				String line;
+				try {
+					while ((line = br.readLine()) != null) {
+						if (executorI != null) {
+							wr.println(line);
+							wr.flush();
+						}
+					}
+				} catch (IOException e) {
+					break;
+				}
+			}
+			
+			try {
+				br.close();
+				wr.close();
+			} catch (IOException e) {}
+			
+
+			if (executorI != null) {
+				executorI.onServerExit();
+			}
+		}		
+	}
 
 	public boolean isWebAppRunning() {
 		return true;
@@ -244,7 +305,7 @@ public class Executor extends Object {
 		if (new File(usrdir, "VoyantServer.jar").isFile()) {
 			sb.append(usrdir + "VoyantServer.jar");
 		} else {
-			sb.append(usrdir + "bin").append(File.pathSeparator + usrdir + "lib" + File.separator + "jetty-all-8.1.9.v20130131.jar").append(File.pathSeparator + usrdir + "lib" + File.separator + "servlet-api-3.0.jar");
+			sb.append(usrdir + "bin").append(File.pathSeparator + usrdir + "lib" + File.separator + "jetty-all-9.2.2.v20140723.jar").append(File.pathSeparator + usrdir + "lib" + File.separator + "servlet-api-3.1.0.jar");
 		}
 
 		return sb.toString();

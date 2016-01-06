@@ -57,9 +57,9 @@ public class VoyantServerTab extends JPanel implements ExecutorInterface{
     private javax.swing.JTextField portTextField;
     private javax.swing.JTextField memoryTextField;
     
-	public VoyantServerTab(ConfigActionInterface _configActionI ) throws IOException {
-		serverConfigMap = ServerConfig.getStoredServerConfig();
+	public VoyantServerTab(ConfigActionInterface _configActionI, ServerConfigMap serverConfigMap) throws IOException {
 		this.configActionI		= _configActionI;
+		this.serverConfigMap = serverConfigMap;
 		
 		initComponents();
 		startServer();
@@ -335,7 +335,7 @@ public class VoyantServerTab extends JPanel implements ExecutorInterface{
     }                                           
 
     private void openWeb() {                                   
-		if ( !executor.isWebAppRunning() )
+		if ( executor!=null && !executor.isWebAppRunning() )
 			return;
 		
 		try {

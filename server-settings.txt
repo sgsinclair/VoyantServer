@@ -1,4 +1,10 @@
+### Settings for VoyantServer ###
 
+# These are settings that define default values for VoyantServer. In most cases
+# the indicated values can be used (or blank to use a default). You can also 
+# override the values in this settings file if you launch VoyantServer from the
+# command line by using -Dorg.voyanttools.server.SETTING=VALUE. For instance:
+# java -Dorg.voyanttools.server.memory=2048 -jar VoyantServer.jar headless=true
 
 # The port to use for the web server (default is 8888). If a port is already in use,
 # this can be changed (8889, etc.). If the server terminated unexpectedly the port
@@ -22,7 +28,7 @@ memory = 1024
 # up an existing corpus automatically (/?corpus=id where id is replaced by the real
 # corpus ID that you've created). If the data directory exists and you want to use it
 # leave this value blank.
-data_directory = 
+data_directory =
 
 # The URI path (after the domain) to use (default is /). This is a good way to provide
 # load a corpus by default, ex: uri_path = /?input=http://cbc.ca/news/ or /?corpus=333.333
@@ -37,4 +43,12 @@ uri_path = /
 # VoyantServer is also a convenient way to host an instance of Voyant Tools that you might
 # want to have more widely accessible, in which case you should comment out this line or remove
 # the value.
-host = 127.0.0.1
+# host = 127.0.0.1
+
+# By default VoyantServer will direct output to the console window within the VoyantServer
+# application (this is a useful place to see what's happening, especially when things go
+# wrong); when in headless mode, logs are simply directed to the standard output. This
+# setting allows you to direct VoyantServer logs to a file instead, which is especially
+# useful when you want to leave a server running and detached from the console
+# value should be true or anything else for false (including blank).
+logs_file =

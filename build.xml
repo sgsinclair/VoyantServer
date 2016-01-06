@@ -12,8 +12,8 @@
 	<property name="jarpath" 	location="lib"/>
 	
 	<path id="project.jars">
-		<pathelement location="${jarpath}/jetty-all-8.1.9.v20130131.jar"/>
-		<pathelement location="${jarpath}/servlet-api-3.0.jar"/>
+		<pathelement location="${jarpath}/jetty-all-9.2.2.v20140723.jar"/>
+		<pathelement location="${jarpath}/servlet-api-3.1.0.jar"/>
 	</path>
 
 	<path id="project.class.path">
@@ -45,8 +45,8 @@
 			filesonly="true"
  			compress="true">
 			<fileset dir="${build}" />
-			<zipfileset src="${jarpath}/jetty-all-8.1.9.v20130131.jar" excludes="META-INF/*" />
-			<zipfileset src="${jarpath}/servlet-api-3.0.jar" excludes="META-INF/*" />
+			<zipfileset src="${jarpath}/jetty-all-9.2.2.v20140723.jar" excludes="META-INF/*" />
+			<zipfileset src="${jarpath}/servlet-api-3.1.0.jar" excludes="META-INF/*" />
 			<manifest>
 				<attribute name="Main-Class" value="org.voyanttools.server.ui.VoyantServerStart"/>
 			</manifest>
@@ -70,8 +70,8 @@
 			filesonly="true"
 			compress="true">
 			<fileset dir="${build}" />
-			<zipfileset src="${jarpath}/jetty-all-8.1.9.v20130131.jar" excludes="META-INF/*" />
-			<zipfileset src="${jarpath}/servlet-api-3.0.jar" excludes="META-INF/*" />
+			<zipfileset src="${jarpath}/jetty-all-9.2.2.v20140723.jar" excludes="META-INF/*" />
+			<zipfileset src="${jarpath}/servlet-api-3.1.0.jar" excludes="META-INF/*" />
 			<manifest>
 				<attribute name="Main-Class" value="org.voyanttools.server.ui.VoyantServerStart"/>
 				<attribute name="appname" value="VoyantServer" />

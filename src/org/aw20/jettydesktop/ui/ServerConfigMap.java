@@ -36,10 +36,11 @@ public class ServerConfigMap extends HashMap<String, String> implements Serializ
 		return new ServerConfigMap(){{
 			setName("");
 			setIP("127.0.0.1");
-			setPort("80");
+			setPort("8888");
 			setWebFolder("");
 			setCurrentJVM();
-			setMemoryJVM("64");
+			setMemoryJVM("1024");
+			setLogsFile(false);
 		}};
 	}
 	
@@ -115,5 +116,21 @@ public class ServerConfigMap extends HashMap<String, String> implements Serializ
 
 	public void setDefaultWebUri(String args) {
 		put("DEFAULTURI", args.trim() );
+	}
+
+	public void setLogsFile(boolean fileLogs) {
+		put("LOGSFILE", fileLogs ? "true" : "false");
+	}
+
+	public boolean getLogsFile() {
+		return this.containsKey("LOGSFILE") && get("LOGSFILE").equals("true");
+	}
+	
+	public void setDataFolder(String folder) {
+		put("DATAFOLDER", folder);
+	}
+	
+	public String getDataFolder() {
+		return get("DATAFOLDER");
 	}
 }

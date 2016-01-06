@@ -21,10 +21,8 @@ public class VoyantServerStartHeadless implements ConfigActionInterface, Executo
 	 * @throws IOException 
 	 * 
 	 */
-	public VoyantServerStartHeadless() throws IOException {
-		ServerConfigMap serverConfigMap = ServerConfig.getStoredServerConfig();
+	public VoyantServerStartHeadless(ServerConfigMap serverConfigMap) throws IOException {
 		Executor executor	= new Executor(serverConfigMap, this);
-
 	}
 
 	/* (non-Javadoc)

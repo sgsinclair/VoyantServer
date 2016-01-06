@@ -12,6 +12,9 @@ import org.aw20.jettydesktop.ui.ServerConfigMap;
 public class ServerConfig {
 
 	public static ServerConfigMap getStoredServerConfig() throws IOException {
+		return getStoredServerConfig(getFile());
+	}
+	public static ServerConfigMap getStoredServerConfig(File file) throws IOException {
 		ServerConfigMap serverConfigMap =  new ServerConfigMap(){{
 			setName("Voyant");
 			setIP("");
@@ -19,41 +22,70 @@ public class ServerConfig {
 			setWebFolder(System.getProperty("user.dir") + File.separator + "_app");
 			setCurrentJVM();
 			setMemoryJVM("1024");
+			setLogsFile(false);
 		}};
 		Properties properties = new Properties();
-		File file = getFile();
 		serverConfigMap.put("lastModified", String.valueOf(file.lastModified()));
 		FileInputStream fis = new FileInputStream(file);
 		properties.load(fis);
 		fis.close();
 		for (String name : properties.stringPropertyNames()) {
 			String val = properties.getProperty(name).trim();
-			if (val.isEmpty()) { continue;}
+			String prop = System.getProperty("org.voyanttools.server."+name); // allow items to be overwritten on the command line
+			if (val.isEmpty() && prop==null) { continue;}
 			if (name.equals("port")) {
-				serverConfigMap.setPort(val);
+				serverConfigMap.setPort(prop==null ? val : prop);
 			}
 			else if (name.equals("memory")) {
-				serverConfigMap.setMemoryJVM(val);
+				serverConfigMap.setMemoryJVM(prop==null ? val : prop);
 			}
 			else if (name.equals("data_directory")) {
-				serverConfigMap.setDefaultJVMArgs((serverConfigMap.getDefaultJVMArgs()!=null ? serverConfigMap.getDefaultJVMArgs()+" " : "") +"-Djava.io.tmpdir="+val);
+				serverConfigMap.setDataFolder(prop==null ? val : prop);
 			}
 			else if (name.equals("uri_path")) {
-				serverConfigMap.setDefaultWebUri(val);
+				serverConfigMap.setDefaultWebUri(prop==null ? val : prop);
 			}
 			else if (name.equals("host")) {
-				serverConfigMap.setIP(val);
+				serverConfigMap.setIP(prop==null ? val : prop);
 			}
+//			else if (name.equals("logs_file")) {
+//				serverConfigMap.setLogsFile(prop==null ? val.equals("true") : prop.equals("true"));
+//			}
 			else {
 				serverConfigMap.put(name, properties.getProperty(name));
 			}
 		}
-		File f = new File("data");
 		
-//		serverConfigMap.setDefaultJVMArgs((serverConfigMap.getDefaultJVMArgs()!=null ? serverConfigMap.getDefaultJVMArgs()+" " : "") +"OPTIONS=Server,jsp");
-		if (new File("data").exists() && (!serverConfigMap.containsKey("data_directory") || serverConfigMap.get("data_directory").isEmpty())) {
-			serverConfigMap.setDefaultJVMArgs((serverConfigMap.getDefaultJVMArgs()!=null ? serverConfigMap.getDefaultJVMArgs()+" " : "") +"-Djava.io.tmpdir="+new File(System.getProperty("user.dir"),"data") );
+		String dataFolder = serverConfigMap.getDataFolder();
+		if (dataFolder==null || dataFolder.isEmpty()) {
+			File dataFile = new File("data");
+			if (dataFile.exists()) {
+				serverConfigMap.setDataFolder(dataFile.getAbsolutePath());
+			}
+			else {
+				File voyantFile = new File(System.getProperty("java.io.tmpdir"), "VoyantServer");
+				if (!voyantFile.exists()) {
+					if (!voyantFile.mkdir()) {
+						throw new IOException("Can't create temporary directory: "+voyantFile);
+					}
+				}
+				serverConfigMap.setDataFolder(voyantFile.getAbsolutePath());
+			}
 		}
+		
+		File dataFile = new File(serverConfigMap.getDataFolder());
+		if (!dataFile.exists()) {
+			throw new IOException("Data folder must already exist, VoyantServer won't create it: "+dataFile.getAbsolutePath());
+		}
+		
+		// set java.io.tmpdir for voyant data
+		serverConfigMap.setDefaultJVMArgs((serverConfigMap.getDefaultJVMArgs()!=null ? serverConfigMap.getDefaultJVMArgs()+" " : "") +"-Djava.io.tmpdir="+new File(serverConfigMap.getDataFolder()).getAbsolutePath() );
+		
+		String prop = System.getProperty("org.voyanttools.server.logs_file"); // allow items to be overwritten on the command line
+		if (prop!=null || properties.getProperty("logs_file", "").equals("true")) {
+			serverConfigMap.setLogsFile(prop==null ? true : prop.equals("true"));
+		}
+		
 		return serverConfigMap;
 	}
 	

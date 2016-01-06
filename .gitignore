@@ -20,3 +20,5 @@ src/main/webapp/WEB-INF/classes
 /_app
 /dist
 /VoyantServerNoNlp.zip
+/VoyantServer.zip
+/logs

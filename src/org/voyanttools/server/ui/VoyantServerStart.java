@@ -9,6 +9,7 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -43,17 +44,29 @@ public class VoyantServerStart extends Start {
 	 * @throws IOException 
 	 * 
 	 */
-	public VoyantServerStart() throws IOException {
-//		loadSettings();
-		initialize();
+	public VoyantServerStart(ServerConfigMap serverConfigMap) throws IOException {
+		initialize(serverConfigMap);
 	}
 
 
 	public static void main(String[] args) {
+		File file = new File("server-settings.txt");
+		for (String arg : args) {
+			if (arg.startsWith("settings=") && arg.length()>9) {
+				file = new File(arg.substring(9));
+			}
+		}
+		final ServerConfigMap serverConfigMap;
+		try {
+			serverConfigMap = ServerConfig.getStoredServerConfig(file);
+		} catch (IOException e1) {
+			throw new RuntimeException(e1);
+		}
+
 		for (String string : args) {
 			if (string.contains("headless=true")) {
 				try {
-					VoyantServerStartHeadless voyantServerStartHeadless = new VoyantServerStartHeadless();
+					VoyantServerStartHeadless voyantServerStartHeadless = new VoyantServerStartHeadless(serverConfigMap);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -74,7 +87,7 @@ public class VoyantServerStart extends Start {
 					System.setProperty("com.apple.mrj.application.apple.menu.about.name", "VoyantServer");
 					
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					final VoyantServerStart window = new VoyantServerStart();
+					final VoyantServerStart window = new VoyantServerStart(serverConfigMap);
 					window.frame.setVisible(true);
 					
 					if (System.getProperty("os.name").equals("Mac OS X"))
@@ -96,7 +109,7 @@ public class VoyantServerStart extends Start {
 		});
 	}
 	
-	private void initialize() throws IOException {
+	private void initialize(ServerConfigMap serverConfigMap) throws IOException {
 		frame = new JFrame();
 		frame.setTitle("Voyant Server");
 		frame.setBounds(100, 100, 610, 414);
@@ -140,7 +153,7 @@ public class VoyantServerStart extends Start {
 		mnHelp.add(mntmSupportSite);
 		
 		// We need to add a new tab
-		VoyantServerTab	sT	= new VoyantServerTab(this );
+		VoyantServerTab	sT	= new VoyantServerTab(this, serverConfigMap);
 		
 		frame.getContentPane().add(sT, BorderLayout.CENTER);
 	}
