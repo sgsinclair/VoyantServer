@@ -305,7 +305,11 @@ public class Executor extends Object {
 		if (new File(usrdir, "VoyantServer.jar").isFile()) {
 			sb.append(usrdir + "VoyantServer.jar");
 		} else {
-			sb.append(usrdir + "bin").append(File.pathSeparator + usrdir + "lib" + File.separator + "jetty-all-9.2.2.v20140723.jar").append(File.pathSeparator + usrdir + "lib" + File.separator + "servlet-api-3.1.0.jar");
+			sb.append(usrdir + "bin").append(File.pathSeparator + usrdir + "lib/*"); /* + File.separator + "jetty-all-9.3.9.M1-uber.jar")
+				.append(File.pathSeparator + usrdir + "lib" + File.separator + "servlet-api-3.1.0.jar")
+				.append(File.pathSeparator + usrdir + "lib" + File.separator + "jasper-6.0.45.jar")
+				.append(File.pathSeparator + usrdir + "lib" + File.separator + "tomcat-juli-9.0.0.M4.jar")
+				.append(File.pathSeparator + usrdir + "lib" + File.separator + "jsp-api-2.0.jar");*/
 		}
 
 		return sb.toString();

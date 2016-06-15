@@ -30,8 +30,13 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.eclipse.jetty.apache.jsp.JettyJasperInitializer;
+import org.eclipse.jetty.plus.annotation.ContainerInitializer;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 public class JettyRunTime extends Object {
@@ -61,6 +66,9 @@ public class JettyRunTime extends Object {
 	public JettyRunTime( String ip, String port, String webapp, String adminport ) throws Exception{
 		System.out.println( "Jetty starting up ... please wait" );
 		
+        // Set JSP to use Standard JavaC always
+        System.setProperty("org.apache.jasper.compiler.disablejsr199", "false");
+		
 		if ( ip == null )
 			server = new Server( Integer.valueOf(port) );
 		else
@@ -72,6 +80,24 @@ public class JettyRunTime extends Object {
 		}
 		
 		WebAppContext context = new WebAppContext();
+		
+        // This webapp will use jsps and jstl. We need to enable the
+        // AnnotationConfiguration in order to correctly
+        // set up the jsp container
+        Configuration.ClassList classlist = Configuration.ClassList
+                .setServerDefault( server );
+        classlist.addBefore(
+                "org.eclipse.jetty.webapp.JettyWebXmlConfiguration",
+                "org.eclipse.jetty.annotations.AnnotationConfiguration" );
+ 
+        // Set the ContainerIncludeJarPattern so that jetty examines these
+        // container-path jars for tlds, web-fragments etc.
+        // If you omit the jar that contains the jstl .tlds, the jsp engine will
+        // scan for them instead.
+        context.setAttribute(
+                "org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",
+                ".*/[^/]*servlet-api-[^/]*\\.jar$|.*/javax.servlet.jsp.jstl-.*\\.jar$|.*/[^/]*taglibs.*\\.jar$" );
+        
 		
 		context.setDescriptor( webapp + "/WEB-INF/web.xml");
 		context.setResourceBase( webapp );
@@ -85,7 +111,17 @@ public class JettyRunTime extends Object {
 		System.out.println( JETTYSTARTED );
 	}
 	
-	
+    /**
+     * Ensure the jsp engine is initialized correctly
+     */
+    private List<ContainerInitializer> jspInitializers()
+    {
+        JettyJasperInitializer sci = new JettyJasperInitializer();
+        ContainerInitializer initializer = new ContainerInitializer(sci, null);
+        List<ContainerInitializer> initializers = new ArrayList<ContainerInitializer>();
+        initializers.add(initializer);
+        return initializers;
+    }	
 	class adminPort extends Thread {
 		
 		ServerSocket	ss;

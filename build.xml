@@ -8,12 +8,12 @@
 	<property name="build" 		location="./bin"/>
 		
 	<!-- Output directories -->
-	<property name="dist" 		location="dist/"/>
+	<property name="rootdist" 		location="dist"/>
+	<property name="dist" 		location="dist/VoyantServer2_1-M4"/>
 	<property name="jarpath" 	location="lib"/>
 	
 	<path id="project.jars">
-		<pathelement location="${jarpath}/jetty-all-9.2.2.v20140723.jar"/>
-		<pathelement location="${jarpath}/servlet-api-3.1.0.jar"/>
+		<fileset dir="${jarpath}" includes="*.jar" />
 	</path>
 
 	<path id="project.class.path">
@@ -25,6 +25,7 @@
 	</target>
 
 	<target name="clean">
+		<delete dir="${rootdist}"/>
 		<delete dir="${build}"/>
 	</target>
 
@@ -40,56 +41,54 @@
 		<copy file="${src}/org/aw20/jettydesktop/rte/webdefault.xml" todir="${build}/org/aw20/jettydesktop/rte"/>
 	</target>
 
-	<target name="jar" depends="clean,compile">
+	<target name="buildbase">
 		<jar jarfile="${dist}/VoyantServer.jar" 
 			filesonly="true"
  			compress="true">
 			<fileset dir="${build}" />
-			<zipfileset src="${jarpath}/jetty-all-9.2.2.v20140723.jar" excludes="META-INF/*" />
-			<zipfileset src="${jarpath}/servlet-api-3.1.0.jar" excludes="META-INF/*" />
+			<zipgroupfileset dir="${jarpath}" includes="*.jar" />
 			<manifest>
 				<attribute name="Main-Class" value="org.voyanttools.server.ui.VoyantServerStart"/>
 			</manifest>
 		</jar>
-		<copy todir="${dist}/_app">
-			<fileset dir="_app"/>
+		<!-- be sure to grab Trombone classes -->
+		<copy todir="${dist}/_app/WEB-INF/classes">
+			<!-- hard-code location unfortunately -->
+			<fileset dir="${src}/../../trombone/target/classes"/>
 		</copy>
 		<copy file="./server-settings.txt" todir="${dist}/"/>
 		<copy file="./license-GPL3.txt" todir="${dist}/"/>
 		<copy file="./README.md" todir="${dist}/"/>
-		<jar jarfile="VoyantServer.zip" 
-			filesonly="true"
- 			compress="true">
-			<fileset dir="${dist}" />
-		</jar>
-		
+		<copy todir="${dist}/data">
+			<fileset dir="data"/>
+		</copy>
 	</target>
 	
-	<target name="smallerjar" depends="clean,compile">
-		<jar jarfile="${dist}/VoyantServer.jar" 
-			filesonly="true"
-			compress="true">
-			<fileset dir="${build}" />
-			<zipfileset src="${jarpath}/jetty-all-9.2.2.v20140723.jar" excludes="META-INF/*" />
-			<zipfileset src="${jarpath}/servlet-api-3.1.0.jar" excludes="META-INF/*" />
-			<manifest>
-				<attribute name="Main-Class" value="org.voyanttools.server.ui.VoyantServerStart"/>
-				<attribute name="appname" value="VoyantServer" />
-			</manifest>
-		</jar>
+	<target name="bigjar" depends="clean,compile,buildbase">
 		<copy todir="${dist}/_app">
 			<fileset dir="_app">
-				<exclude name="**/*stanford-corenlp-1.2.0-models.jar"/>
+				<exclude name="**/trombone*.jar"/>
 			</fileset>
 		</copy>
-		<copy file="./server-settings.txt" todir="${dist}/"/>
-		<copy file="./license-GPL3.txt" todir="${dist}/"/>
-		<copy file="./README.md" todir="${dist}/"/>
-		<jar jarfile="VoyantServerNoNlp.zip" 
+		<zip destfile="VoyantServerWithModels.zip" 
+			filesonly="true"
+ 			compress="true">
+			<fileset dir="${rootdist}" />
+		</zip>
+	</target>
+	
+	<target name="jar" depends="clean,compile,buildbase">
+		<copy todir="${dist}/_app">
+			<fileset dir="_app">
+				<exclude name="**/stanford*models.jar"/>
+				<exclude name="**/trombone*.jar"/>
+			</fileset>
+		</copy>
+		<zip destfile="VoyantServer2_1-M4.zip" 
 			filesonly="true"
 			compress="true">
-			<fileset dir="${dist}" />
-		</jar>
+			<fileset dir="${rootdist}" />
+		</zip>
 		
 	</target>	
 </project>

@@ -1,0 +1,28 @@
+<org.voyanttools.trombone.util.FlexibleParameters>
+  <entries>
+    <entry>
+      <string>accessIP</string>
+      <list>
+        <string>127.0.0.1</string>
+      </list>
+    </entry>
+    <entry>
+      <string>upload</string>
+      <list>
+        <string>/var/folders/fp/5n6_vyc14mlf5tmr4d0dc0lm0000gn/T/VoyantServer/tmp.voyant.uploads/tmp.voyant.uploads3433845947664555553/Austen.zip</string>
+      </list>
+    </entry>
+    <entry>
+      <string>tool</string>
+      <list>
+        <string>corpus.CorpusCreator</string>
+      </list>
+    </entry>
+    <entry>
+      <string>textarea-1014-inputEl</string>
+      <list>
+        <string>Type in one or more URLs on separate lines or paste in a full text.</string>
+      </list>
+    </entry>
+  </entries>
+</org.voyanttools.trombone.util.FlexibleParameters>
