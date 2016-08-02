@@ -35,11 +35,9 @@ data_directory =
 # to escape characters (like spaces), eg:  /?openMenu=444.444:Corpus+One;555.555:Corpus+Two
 uri_path = /
 
-# This allows you to limit traffic to the specific host (domain or IP). By default (127.0.0.1)
-# it is set to be restrictive and to only accept local requests (in order to favour privacy).
-# VoyantServer is also a convenient way to host an instance of Voyant Tools that you might
-# want to have more widely accessible, in which case you should comment out this line or remove
-# the value.
+# This allows you to limit traffic to the specific host (domain or IP), which may be useful
+# if you want to run a very secure local instance just for your own purposes, in which case
+# you should uncomment the seeting (remove the hash and the space).
 # host = 127.0.0.1
 
 # By default VoyantServer will direct output to the console window within the VoyantServer
