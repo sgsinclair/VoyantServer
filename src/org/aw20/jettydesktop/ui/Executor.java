@@ -87,6 +87,13 @@ public class Executor extends Object {
 		// force UTF-8
 		programArgs.add("-Dfile.encoding=UTF-8");
 		
+		if (options.containsKey("open_menu")) {
+			String openMenu = options.get("open_menu");
+			if (openMenu!=null && openMenu.isEmpty()==false) {
+				programArgs.add("\"-Dorg.voyanttools.voyant.open_menu="+openMenu+"\"");
+			}
+		}
+		
 		if (options.getMemoryJVM() != null)
 			programArgs.add("-Xmx" + options.getMemoryJVM() + "m");
 
