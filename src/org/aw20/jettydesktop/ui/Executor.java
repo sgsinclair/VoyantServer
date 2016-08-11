@@ -35,6 +35,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class Executor extends Object {
 		if (options.containsKey("open_menu")) {
 			String openMenu = options.get("open_menu");
 			if (openMenu!=null && openMenu.isEmpty()==false) {
-				programArgs.add("\"-Dorg.voyanttools.voyant.open_menu="+openMenu+"\"");
+				programArgs.add("-Dorg.voyanttools.voyant.openmenu=\""+URLEncoder.encode(openMenu, "UTF-8")+"\"");
 			}
 		}
 		

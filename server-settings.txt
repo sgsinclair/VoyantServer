@@ -48,10 +48,10 @@ uri_path = /
 # value should be true or anything else for false (including blank).
 logs_file =
 
-# This is a query string that defines which corpora appear in the drop-down menu when
-# the user opens an existing corpus. If this is commented out or blank then the default value
-# is used (currently the Austen and Shakespeare corpora). Corpora are defined using a URL
-# query syntax where the key is the corpus ID and the value is the label that appears in the
-# interface. For instance, this would be the default:
-# open_menu = shakespeare=Shakespeare's Plays&austen=Austen's Novels
-open_menu = test one=three
+# This option defines which corpora appear in the drop-down menu when the user opens an
+# existing corpus. If this is commented out or blank then the default value is used
+# (currently the Austen and Shakespeare corpora). Corpora are defined using a special
+# syntax: corpusID:label and multiple corpora are separated by semi-colon. For instance,
+# this would be the default:
+# open_menu = shakespeare:Shakespeare's Plays;austen:Austen's Novels
+open_menu =
