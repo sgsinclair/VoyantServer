@@ -53,8 +53,16 @@ uri_path = /
 # value should be true or anything else for false (including blank).
 logs_file =
 
+# This option defines which corpora appear in the drop-down menu when the user opens an
+# existing corpus. If this is commented out or blank then the default value is used
+# (currently the Austen and Shakespeare corpora). Corpora are defined using a special
+# syntax: corpusID:label and multiple corpora are separated by semi-colon. For instance,
+# this would be the default:
+# open_menu = shakespeare:Shakespeare's Plays;austen:Austen's Novels
+open_menu =
+
 # This allows you to prevent Voyant from accepting any further input, in other words no new
 # documents can be added. That doesn't necessarily mean no new corpora can be created, there
 # may be a new corpus based on a subset of an existing corpus. The default value is true
 # (to allow new input), set this to false to prevent new input from being added.
-allow_input = true
+allow_input = false
