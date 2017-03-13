@@ -87,6 +87,10 @@ public class Executor extends Object {
 		// force UTF-8
 		programArgs.add("-Dfile.encoding=UTF-8");
 		
+		if (options.getAllowInput()==false) {
+			programArgs.add("-Dorg.voyanttools.server.allowinput=false");
+		}
+		
 		if (options.getMemoryJVM() != null)
 			programArgs.add("-Xmx" + options.getMemoryJVM() + "m");
 

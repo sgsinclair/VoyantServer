@@ -9,7 +9,7 @@
 		
 	<!-- Output directories -->
 	<property name="rootdist" 		location="dist"/>
-	<property name="dist" 		location="dist/VoyantServer2_1-M4"/>
+	<property name="dist" 		location="dist/VoyantServer2_2-M4"/>
 	<property name="jarpath" 	location="lib"/>
 	
 	<path id="project.jars">
@@ -84,7 +84,7 @@
 				<exclude name="**/trombone*.jar"/>
 			</fileset>
 		</copy>
-		<zip destfile="VoyantServer2_1-M4.zip" 
+		<zip destfile="VoyantServer2_2-M4.zip" 
 			filesonly="true"
 			compress="true">
 			<fileset dir="${rootdist}" />
