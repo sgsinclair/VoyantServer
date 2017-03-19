@@ -65,4 +65,4 @@ open_menu =
 # documents can be added. That doesn't necessarily mean no new corpora can be created, there
 # may be a new corpus based on a subset of an existing corpus. The default value is true
 # (to allow new input), set this to false to prevent new input from being added.
-allow_input = false
+allow_input = true
