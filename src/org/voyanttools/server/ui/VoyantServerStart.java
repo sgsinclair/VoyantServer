@@ -50,10 +50,16 @@ public class VoyantServerStart extends Start {
 
 
 	public static void main(String[] args) {
-		File file = new File("server-settings.txt");
+		File file = new File(System.getProperty("user.dir"), "server-settings.txt");
 		for (String arg : args) {
 			if (arg.startsWith("settings=") && arg.length()>9) {
 				file = new File(arg.substring(9));
+				if (file.exists()==false) {
+					file = new File(System.getProperty("user.dir"), "server-settings.txt");
+				}
+				if (file.exists()==false) {
+					throw new IllegalArgumentException("Could not find specified settings file: "+file);
+				}
 			}
 		}
 		final ServerConfigMap serverConfigMap;
