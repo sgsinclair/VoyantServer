@@ -1,3 +1,6 @@
+#### With the passing of Stéfan Sinclair, this repository has been archived. ####
+#### Please see [voyanttools/VoyantServer](https://github.com/voyanttools/VoyantServer) for future development. ####
+
 ## Voyant Server ##
 
 Voyant Server is a web application launcher for Voyant Tools – it makes it easy to run a stand-alone instance of Voyant Tools on your local machine, which has several potential advantages (performance, security, privacy, reliability, etc.) compared to the [hosted version](http://voyant-tools.org).
