@@ -11,5 +11,10 @@ See the [latest release](https://github.com/sgsinclair/VoyantServer/releases/lat
 
 Once you open VoyantServer.jar a controller application will appear (that allows you stop stop the server, see error messages, change settings, etc.) and a new browser will also appear with Voyant Tools. That's it!
 
+If you receive an error message on macOS:
+> *The Java JAR file “VoyantServer.jar” could not be launched. Check the Console for possible error messages.*
+
+you may open VoyantServer via the terminal: `java -jar VoyantServer.jar` as a workaround.
+
 ## License ##
 Voyant Server is released under the same license as JettyDesktop, the GNU General Public License v3.0 (see license-GPL3.txt in this directory).
